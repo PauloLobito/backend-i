@@ -1,3 +1,8 @@
+import typer
+
+cli =typer.Typer()
+
+
 def main():
     print("Hello from session4!")
 
