@@ -1,6 +1,7 @@
 from typer import Typer, echo, style, colors
 from datetime import datetime
 from dataclasses import dataclass
+<<<<<<< HEAD
 from pydantic import BaseModel, Field
 
 
@@ -9,6 +10,15 @@ class Meeting():
     title: str
     owner: str
     date: str = datetime.now().strftime("%d/%m/%Y %H:%M")
+=======
+
+
+@dataclass
+class Meeting:
+    title: str
+    owner: str
+    date: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+>>>>>>> db348a9 (feat: sessions)
 
 
 cli = Typer()
@@ -25,6 +35,7 @@ def goodbye(name: str, surname: str) -> None:
 
 
 @cli.command()
+<<<<<<< HEAD
 def create_meeting(title: str, owner: str):
 
     meeting = Meeting(title=title, owner=owner)
@@ -33,6 +44,19 @@ def create_meeting(title: str, owner: str):
     ===========================================
                {meeting.title}
     ===========================================
+=======
+def create_meeting(title: str, owner: str) -> None:
+
+    meeting = Meeting(title=title, owner=owner)
+
+    """
+    Comand to create a new meeting note
+    """
+    echo(style(f"""
+    =====================================
+               {meeting.title}
+    =====================================
+>>>>>>> db348a9 (feat: sessions)
     created by {meeting.owner} on {meeting.date}
         """, fg=colors.BRIGHT_CYAN, bold=True))
 
