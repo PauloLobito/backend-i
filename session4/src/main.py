@@ -1,11 +1,13 @@
 import typer
+from services import meeting
 
 cli =typer.Typer()
 
+@cli.command()
+def create(title:str,owner:str,date:str):
+    meeting.create(title,owner,date)
 
-def main():
-    print("Hello from session4!")
 
 
 if __name__ == "__main__":
-    main()
+    cli()
