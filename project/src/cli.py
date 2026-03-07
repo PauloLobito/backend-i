@@ -1,5 +1,6 @@
+
 import typer
-from src.logic import analyze_text
+from logic import analyze_text  # relativo à pasta src
 
 app = typer.Typer()  
 
