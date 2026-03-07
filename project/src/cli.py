@@ -3,6 +3,7 @@ from logic import analyze_text
 
 app = typer.Typer()
 
+
 @app.command()
 def analyze(file: str):
     """
