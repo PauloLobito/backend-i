@@ -1,5 +1,5 @@
 import typer
-from logic import analyze_text
+from src.logic import analyze_text
 
 app = typer.Typer()
 
