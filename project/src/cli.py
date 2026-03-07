@@ -1,11 +1,13 @@
-
 import typer
 from src.logic import analyze_text
 
-app = typer.Typer()
+app = typer.Typer()  
+
 
 @app.command()
-def analyze(file: str):
+def analyze(
+    file: str = typer.Argument(..., help="Path to the text file to analyze")
+):
     """Analyze a text file and show statistics."""
     try:
         result = analyze_text(file)
