@@ -1,15 +1,4 @@
-from data import read_file
+def read_file(filepath: str):
 
-
-def analyze_text(filepath: str):
-    text = read_file(filepath)
-
-    lines = text.count("\n") + 1
-    words = len(text.split())
-    characters = len(text)
-
-    return {
-        "lines": lines,
-        "words": words,
-        "characters": characters
-    }
+    with open(filepath, "r", encoding="utf-8") as file:
+        return file.read()
