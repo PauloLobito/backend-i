@@ -1,6 +1,8 @@
 
+from unittest import result
+
 import typer
-from logic import analyze_text  # relativo à pasta src
+from src.logic import analyze_text  # relativo à pasta src
 
 app = typer.Typer()  
 
@@ -12,10 +14,12 @@ def analyze(
     """Analyze a text file and show statistics."""
     try:
         result = analyze_text(file)
-        print(f"Lines: {result['lines']}")
-        print(f"Words: {result['words']}")
-        print(f"Characters: {result['characters']}")
+        typer.echo(f"Lines: {result['lines']}")
+        typer.echo(f"Words: {result['words']}")
+        typer.echo(f"Characters: {result['characters']}")
     except FileNotFoundError:
-        print("Error: File not found.")
+        typer.echo("Error: File not found.")
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        typer.echo(f"Unexpected error: {e}")
+
+        

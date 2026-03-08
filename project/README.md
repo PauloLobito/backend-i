@@ -1,21 +1,32 @@
 # Text Analyzer CLI
 
-## Description
+This project is a command-line interface (CLI) tool built with Python and Typer.
+It analyzes a text file and returns statistics such as:
 
-This CLI tool analyzes a text file and returns:
-
-- number of lines
-- number of words
-- number of characters
-
-It is built using Python, Typer, and uv.
-
----
+- Number of lines
+- Number of words
+- Number of characters
 
 ## Installation
 
 Clone the repository:
 
-```bash
 git clone https://github.com/PauloLobito/backend-i.git
-cd Project
+cd backend-i/project
+
+Install dependencies with uv:
+
+uv sync
+
+## Usage
+
+Run the CLI command:
+
+python main.py example.txt
+
+
+Example output:
+
+Lines: 10
+Words: 120
+Characters: 750
