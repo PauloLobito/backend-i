@@ -2,13 +2,44 @@
 
 A comprehensive Django and FastAPI backend course covering APIs, testing, authentication, and deployment.
 
+## Repository
+
+**GitHub:** https://github.com/PauloLobito/backend-i
+
 ## Sessions Overview
 
-| Session | Topic | Technology |
-|---------|-------|------------|
-| 1-4 | CLI Basics | Python/Typer |
-| 5-14 | REST API | FastAPI |
-| 15-17 | Django | Django ORM |
+| Session | Topic | Technology | Web Testing |
+|---------|-------|------------|-------------|
+| 1-4 | CLI Basics | Python/Typer | Terminal only |
+| 5-14 | REST API | FastAPI | ✅ Browser |
+| 15-17 | Django | Django ORM | ✅ Browser |
+
+---
+
+## FastAPI Web Interface (Sessions 5-14)
+
+All FastAPI sessions include an **interactive web interface** for testing:
+
+- **Swagger UI:** http://127.0.0.1:8000/docs
+- **ReDoc:** http://127.0.0.1:8000/redoc
+- **OpenAPI JSON:** http://127.0.0.1:8000/openapi.json
+
+### How to Access
+
+```bash
+# 1. Go to any session folder (5-14)
+cd session5  # or session6, session7, etc.
+
+# 2. Install dependencies
+uv sync
+
+# 3. Start the server
+uv run uvicorn src.api.main:app --reload --port 8000
+
+# 4. Open in browser:
+#    - http://127.0.0.1:8000/docs
+#    - http://127.0.0.1:8000/redoc
+```
 
 ---
 
@@ -22,7 +53,7 @@ cd session1
 uv sync
 ```
 
-**Test:**
+**Test (Terminal):**
 ```bash
 uv run python session1/main.py --help
 uv run python session1/main.py create-meeting --title "Planning" --date 2026-03-10 --owner Jorge
@@ -98,8 +129,11 @@ uv run pip install fastapi uvicorn
 **Test:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
-curl http://127.0.0.1:8000/
 ```
+
+**Web Testing:**
+- Open: http://127.0.0.1:8000/docs
+- Click "GET /" → "Try it out" → "Execute"
 
 ---
 
@@ -114,10 +148,23 @@ uv sync
 uv run pip install fastapi uvicorn
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
+```
 
+**Web Testing (http://127.0.0.1:8000/docs):**
+
+| Operation | Endpoint | Method |
+|-----------|----------|--------|
+| Create meeting | /meetings | POST |
+| List meetings | /meetings | GET |
+| Get meeting | /meetings/{id} | GET |
+| Update meeting | /meetings/{id} | PUT |
+| Delete meeting | /meetings/{id} | DELETE |
+
+**Terminal Testing:**
+```bash
 # Create meeting
 curl -X POST http://127.0.0.1:8000/meetings \
   -H "Content-Type: application/json" \
@@ -125,17 +172,6 @@ curl -X POST http://127.0.0.1:8000/meetings \
 
 # List meetings
 curl http://127.0.0.1:8000/meetings
-
-# Get meeting by ID
-curl http://127.0.0.1:8000/meetings/{id}
-
-# Update meeting
-curl -X PUT http://127.0.0.1:8000/meetings/{id} \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Updated Planning","date":"2026-03-10","owner":"Jorge"}'
-
-# Delete meeting
-curl -X DELETE http://127.0.0.1:8000/meetings/{id}
 ```
 
 ---
@@ -150,10 +186,18 @@ cd session7
 uv sync
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
+```
 
+**Web Testing (http://127.0.0.1:8000/docs):**
+
+1. Try "POST /meetings" with missing required field → 422 error
+2. Try "GET /meetings/{id}" with invalid ID → 404 error
+
+**Terminal Testing:**
+```bash
 # Valid request
 curl -X POST http://127.0.0.1:8000/meetings \
   -H "Content-Type: application/json" \
@@ -163,9 +207,6 @@ curl -X POST http://127.0.0.1:8000/meetings \
 curl -X POST http://127.0.0.1:8000/meetings \
   -H "Content-Type: application/json" \
   -d '{"date":"2026-03-10"}'
-
-# Not found
-curl http://127.0.0.1:8000/meetings/nonexistent-id
 ```
 
 ---
@@ -180,9 +221,16 @@ cd session8
 uv sync
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
+```
+
+**Web Testing:**
+- http://127.0.0.1:8000/docs → "GET /reports/summary" → "Try it out" → "Execute"
+
+**Terminal Testing:**
+```bash
 curl http://127.0.0.1:8000/reports/summary
 ```
 
@@ -198,20 +246,16 @@ cd session9
 uv sync
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
-
-# Valid payload
-curl -X POST http://127.0.0.1:8000/meetings \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Planning","date":"2026-03-10","owner":"Jorge","participants":["Ana"]}'
-
-# Invalid date format
-curl -X POST http://127.0.0.1:8000/meetings \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Planning","date":"invalid","owner":"Jorge"}'
 ```
+
+**Web Testing (http://127.0.0.1:8000/docs):**
+
+1. "POST /meetings" with valid data → 201 Created
+2. "POST /meetings" with invalid date → 422 Validation Error
+3. "POST /meetings" with empty title → 422 Validation Error
 
 ---
 
@@ -225,10 +269,21 @@ cd session10
 uv sync
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
+```
 
+**Web Testing (http://127.0.0.1:8000/docs):**
+
+| Operation | Endpoint | Method |
+|-----------|----------|--------|
+| Create meeting | /meetings | POST |
+| Create action item | /meetings/{id}/action-items | POST |
+| List action items | /action-items | GET |
+
+**Terminal Testing:**
+```bash
 # Create meeting
 MEETING_ID=$(curl -s -X POST http://127.0.0.1:8000/meetings \
   -H "Content-Type: application/json" \
@@ -255,14 +310,14 @@ cd session11
 uv sync
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
-
-# Full CRUD for meetings and action items
-curl http://127.0.0.1:8000/meetings
-curl http://127.0.0.1:8000/action-items
 ```
+
+**Web Testing (http://127.0.0.1:8000/docs):**
+
+Test all CRUD operations for both meetings and action items.
 
 ---
 
@@ -276,10 +331,30 @@ cd session12
 uv sync
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
+```
 
+**Web Testing (http://127.0.0.1:8000/docs):**
+
+| Filter | Query Param | Example |
+|--------|-------------|---------|
+| By owner | owner=Jorge | /meetings?owner=Jorge |
+| By status | status=scheduled | /meetings?status=scheduled |
+| Limit | limit=10 | /meetings?limit=10 |
+| Offset | offset=0 | /meetings?offset=0 |
+| Sort by | sort_by=date | /meetings?sort_by=date |
+| Order | order=desc | /meetings?order=desc |
+| Combined | all filters | /meetings?owner=Jorge&limit=5&offset=0 |
+
+**Try in Swagger UI:**
+1. "GET /meetings" → "Try it out"
+2. Add query: `owner=Jorge&limit=10&offset=0&sort_by=date&order=asc`
+3. "Execute"
+
+**Terminal Testing:**
+```bash
 # Filter by owner
 curl "http://127.0.0.1:8000/meetings?owner=Jorge"
 
@@ -291,9 +366,6 @@ curl "http://127.0.0.1:8000/meetings?sort_by=date&order=desc"
 
 # Combined filters
 curl "http://127.0.0.1:8000/meetings?owner=Jorge&limit=5&offset=0&status=scheduled"
-
-# Filter action items by owner
-curl "http://127.0.0.1:8000/action-items?owner=Ana&limit=10"
 ```
 
 ---
@@ -321,6 +393,12 @@ uv run pytest -v
 uv run pytest tests/test_meetings.py::test_health_ok -v
 ```
 
+**Web Testing:**
+```bash
+uv run uvicorn src.api.main:app --reload --port 8000
+# Then open http://127.0.0.1:8000/docs
+```
+
 ---
 
 ## Session 14 | API Checkpoint
@@ -334,20 +412,36 @@ uv sync
 uv pip install pytest httpx
 ```
 
-**Test:**
+**Start Server:**
 ```bash
 uv run uvicorn src.api.main:app --reload --port 8000
+```
 
-# Check OpenAPI info
+**Web Testing:**
+
+| Page | URL | Description |
+|------|-----|-------------|
+| Swagger UI | http://127.0.0.1:8000/docs | Interactive API docs |
+| ReDoc | http://127.0.0.1:8000/redoc | Alternative docs view |
+| Dashboard | http://127.0.0.1:8000/dashboard/summary | API metrics |
+| Health | http://127.0.0.1:8000/health | Health check |
+
+**OpenAPI Info:**
+```bash
 curl http://127.0.0.1:8000/openapi.json | jq '.info'
+```
 
-# Access docs
-# http://127.0.0.1:8000/docs
+**Expected Output:**
+```json
+{
+  "title": "Meeting Note Assistant API",
+  "version": "0.2.0",
+  "description": "Meetings, notes, and action items management"
+}
+```
 
-# Dashboard summary
-curl http://127.0.0.1:8000/dashboard/summary | jq
-
-# Run tests
+**Run Tests:**
+```bash
 uv run pytest -q
 ```
 
@@ -364,20 +458,22 @@ uv pip install django
 uv run python manage.py migrate
 ```
 
-**Test:**
+**Start Server:**
 ```bash
-# Create superuser
-uv run python manage.py createsuperuser
-
-# Run server
 uv run python manage.py runserver
+```
 
-# Django shell
+**Web Testing:**
+- Open: http://127.0.0.1:8000/admin
+
+**Django Shell Testing:**
+```bash
 uv run python manage.py shell
 >>> from meetings.models import Meeting, ActionItem
 >>> m = Meeting.objects.create(title="Planning", date="2026-03-10", owner="Jorge")
 >>> Meeting.objects.all()
->>> m.delete()
+>>> ActionItem.objects.create(meeting=m, description="Review doc", owner="Ana", due_date="2026-03-15")
+>>> m.action_items.all()
 ```
 
 ---
@@ -394,18 +490,30 @@ uv run python manage.py migrate
 uv run python manage.py createsuperuser
 ```
 
-**Test:**
+**Start Server:**
 ```bash
-# Run server
 uv run python manage.py runserver
-
-# Visit http://127.0.0.1:8000/admin
-
-# Features:
-# - List/filter/search meetings
-# - List/filter action items
-# - Custom action: "Mark selected tasks as completed"
 ```
+
+**Web Testing:**
+
+1. Open: http://127.0.0.1:8000/admin
+2. Login with superuser credentials
+3. Test **Meetings**:
+   - List all meetings
+   - Filter by date/owner
+   - Search by title/owner
+   - Create new meeting
+   - Edit existing meeting
+4. Test **Action Items**:
+   - List all action items
+   - Filter by status
+   - Search by description/owner
+   - Create new action item
+5. Test **Custom Action**:
+   - Select action items
+   - Choose "Mark selected tasks as completed"
+   - Click "Go"
 
 ---
 
@@ -421,49 +529,58 @@ uv run python manage.py migrate
 uv run python manage.py createsuperuser
 ```
 
-**Test:**
+**Setup Permissions:**
 ```bash
-# Create groups and permissions
 uv run python manage.py shell
 >>> from permissions_setup import setup_permissions, setup_action_item_permissions
 >>> setup_permissions()
 >>> setup_action_item_permissions()
 >>> exit()
-
-# Run server
-uv run python manage.py runserver
-
-# Visit http://127.0.0.1:8000/admin
-# Create users and assign to groups (admin, editor, viewer)
-# Test that:
-# - viewers can only view
-# - editors can view and edit (not delete)
-# - admins have full access
-# - owners can edit their own items
 ```
+
+**Start Server:**
+```bash
+uv run python manage.py runserver
+```
+
+**Web Testing:**
+
+1. Open: http://127.0.0.1:8000/admin
+2. Login as superuser
+3. Create users and assign to groups:
+   - **admin** - Full access (add, change, delete, view)
+   - **editor** - Add, change, view (no delete)
+   - **viewer** - View only (no add, change, delete)
+4. Logout and login as different users to test permissions
 
 ---
 
 ## Quick Start - All Sessions
 
+### FastAPI Sessions (5-14)
 ```bash
-# Clone the repository
-git clone https://github.com/PauloLobito/backend-i.git
-cd backend-i
-
-# Run tests for all FastAPI sessions (13-14)
-for i in 13 14; do
+for i in 5 6 7 8 9 10 11 12 13 14; do
   cd session$i
   uv sync
-  uv run pytest -q
+  uv run uvicorn src.api.main:app --reload --port 8000 &
+  echo "Testing session$i..."
+  sleep 2
+  curl http://127.0.0.1:8000/docs
+  kill %1 2>/dev/null
   cd ..
 done
+```
 
-# Run Django migrations (15-17)
+### Django Sessions (15-17)
+```bash
 for i in 15 16 17; do
   cd session$i
   uv pip install django
   uv run python manage.py migrate
+  uv run python manage.py runserver &
+  echo "Testing session$i at http://127.0.0.1:8000/admin"
+  sleep 2
+  kill %1 2>/dev/null
   cd ..
 done
 ```
@@ -472,10 +589,42 @@ done
 
 ## Requirements
 
-- Python 3.10+
-- [uv](https://github.com/astral-sh/uv) (recommended) or pip
-- Django (sessions 15-17)
-- FastAPI (sessions 5-14)
+| Tool | Version | Purpose |
+|------|---------|---------|
+| Python | 3.10+ | Runtime |
+| uv | Latest | Package manager |
+| Django | Latest | Sessions 15-17 |
+| FastAPI | Latest | Sessions 5-14 |
+| pytest | Latest | Sessions 13-14 |
+
+### Install uv
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+---
+
+## Browser Testing Tips
+
+### Swagger UI (/docs)
+1. Lists all endpoints with descriptions
+2. Click any endpoint to expand
+3. Click "Try it out"
+4. Fill parameters/body
+5. Click "Execute"
+6. See response with status code
+
+### ReDoc (/redoc)
+1. Clean, readable documentation
+2. Click endpoint to see details
+3. Copy request examples
+
+### Django Admin (/admin)
+1. Login required
+2. CRUD operations via forms
+3. Filter sidebar
+4. Search boxes
+5. Custom actions dropdown
 
 ---
 
