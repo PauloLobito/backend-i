@@ -1,0 +1,46 @@
+{
+  "67d41a3c-ecf1-4a8a-a41b-4baf19151e25": {
+    "title": "Retro",
+    "owner": "Jorge",
+    "date": "2026-03-04T00:00:00",
+    "content": "",
+    "action_items": []
+  },
+  "3f2cdb7e-b7b0-48a9-ac7b-e3499585d382": {
+    "title": "Sprint Review",
+    "owner": "Jorge",
+    "participants": [
+      "Jorge",
+      "Ana"
+    ],
+    "date": "2026-03-20T00:00:00",
+    "status": "scheduled",
+    "content": "",
+    "action_items": []
+  },
+  "9afe0493-5278-41fa-aa57-c7efb0a83c45": {
+    "title": "Sprint Planning",
+    "owner": "Ana",
+    "participants": [
+      "Ana",
+      "Bruno"
+    ],
+    "date": "2025-09-15T00:00:00",
+    "status": "scheduled",
+    "content": "",
+    "action_items": [
+      {
+        "id": "146717b9-cab4-4c2c-b44d-1a76a8527a8b",
+        "description": "Enviar resumo ao cliente",
+        "owner": "Bruno",
+        "due_date": "2025-09-20T00:00:00"
+      },
+      {
+        "id": "e7fa2d40-0ac0-4d5a-b5d8-ea9ecafa2bde",
+        "description": "Preparar próximos tópicos",
+        "owner": "Ana",
+        "due_date": "2025-09-25T00:00:00"
+      }
+    ]
+  }
+}

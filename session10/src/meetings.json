@@ -1,0 +1,21 @@
+{
+  "67d41a3c-ecf1-4a8a-a41b-4baf19151e25": {
+    "title": "Retro",
+    "owner": "Jorge",
+    "date": "2026-03-04T00:00:00",
+    "content": "",
+    "action_items": []
+  },
+  "3f2cdb7e-b7b0-48a9-ac7b-e3499585d382": {
+    "title": "Sprint Review",
+    "owner": "Jorge",
+    "participants": [
+      "Jorge",
+      "Ana"
+    ],
+    "date": "2026-03-20T00:00:00",
+    "status": "scheduled",
+    "content": "",
+    "action_items": []
+  }
+}
