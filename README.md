@@ -626,8 +626,4 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 4. Search boxes
 5. Custom actions dropdown
 
----
 
-## License
-
-MIT
